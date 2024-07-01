@@ -1,8 +1,25 @@
 <script>
   import { fly } from "svelte/transition";
+  import { signOut } from "firebase/auth";
+  import { auth } from "../lib/firebase/firebase";
   let searchform = false;
+  import { user } from "../store/user";
+  import { goto } from "$app/navigation";
+  $: isloggedin = $user.isLoggedIn
+
   function toggleSearch(){
     searchform = !searchform
+  }
+
+  async function logout(){
+    try{
+    await signOut(auth);
+    $user.isLoggedIn = false
+    $user.email = ''
+    }catch(e){
+      console.log(e)
+    }
+    goto('/')
   }
 
 </script>
@@ -14,6 +31,11 @@
       </label>
       <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 bg-slate-800 text-white">
         <li><a href="/movies" class="hover:text-slate-200">Movies</a></li>
+        {#if isloggedin}
+        <li><button on:click={() => logout() } class="hover:text-slate-200">Logout</button></li>
+        {:else}
+        <li><a href="/account/login" class="hover:text-slate-200">Account</a></li>
+        {/if}
       </ul>
     </div>
   </div>

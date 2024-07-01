@@ -4,7 +4,7 @@
     const movie = data ? JSON.parse(data.movie) : {};
 </script>
 
-<div class="card w-[60%] h-[700px] glass mx-auto mt-12" in:fly={{ y: 100, duration: 500 }}>
+<div class="card w-[60%] h-[700px] glass mx-auto mt-12 bg-gradient-to-tr from-slate-800 to-slate-900 text-white" in:fly={{ y: 100, duration: 500 }}>
   <figure class="overflow-hidden"><img class="w-full object-cover hover:scale-110 transition ease-in-out duration-500" src="https://image.tmdb.org/t/p/w500/{movie.poster_path}" alt="car!"/></figure>
   <div class="card-body">
     <h2 class="card-title">{movie.title}</h2>
